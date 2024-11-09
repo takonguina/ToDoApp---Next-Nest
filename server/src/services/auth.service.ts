@@ -1,15 +1,25 @@
+import {
+  Injectable,
+  BadRequestException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
-import { User } from 'src/models/user.model';
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/sequelize';
+
+import { LoginDto } from 'src/dto/login.dto';
+import { User } from 'src/models/user.model';
 import { RegisterDto } from 'src/dto/register.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(User) private userModel: typeof User) {}
+  constructor(
+    @InjectModel(User) private userModel: typeof User,
+    private readonly jwtService: JwtService,
+  ) {}
 
-  // Create new user
-  async createUser(RegisterDto: RegisterDto): Promise<User> {
+  // Register new user
+  async register(RegisterDto: RegisterDto): Promise<User> {
     const { email, password, firstName, lastName } = RegisterDto;
 
     // Check if all required fields are provided
@@ -35,5 +45,32 @@ export class AuthService {
     });
 
     return newUser;
+  }
+
+  // Login user
+  async login(loginDto: LoginDto): Promise<{ token: string }> {
+    const { email, password } = loginDto;
+
+    // Check if all required fields are provided
+    if (!email || !password) {
+      throw new BadRequestException('Missing required fields');
+    }
+
+    // Check if the user exists
+    const user = await this.userModel.findOne({ where: { email } });
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    // Check if the password is correct
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    // Generate JWT token
+    const token = this.jwtService.sign({ id: user.id });
+
+    return { token };
   }
 }
