@@ -2,15 +2,15 @@ import * as bcrypt from 'bcryptjs';
 import { User } from 'src/models/user.model';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateUserDto } from 'src/dto/create-user.dto';
+import { RegisterDto } from 'src/dto/register.dto';
 
 @Injectable()
-export class UserService {
+export class AuthService {
   constructor(@InjectModel(User) private userModel: typeof User) {}
 
   // Create new user
-  async createUser(CreateUserDto: CreateUserDto): Promise<User> {
-    const { email, password, firstName, lastName } = CreateUserDto;
+  async createUser(RegisterDto: RegisterDto): Promise<User> {
+    const { email, password, firstName, lastName } = RegisterDto;
 
     // Check if all required fields are provided
     if (!firstName || !lastName || !email || !password) {

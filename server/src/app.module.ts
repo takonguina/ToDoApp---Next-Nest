@@ -4,25 +4,17 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { databaseConfig } from './config/database.config';
-import { Sequelize } from 'sequelize-typescript';
 
 // modules
-import { UserModule } from './modules/user.modules';
+import { AuthModule } from './modules/auth.modules';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     SequelizeModule.forRoot(databaseConfig),
-    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  constructor(private sequelize: Sequelize) {}
-
-  async onModuleInit() {
-    // Synchronizing models with the database
-    await this.sequelize.sync({ alter: true }); // Create or update tables
-  }
-}
+export class AppModule {}

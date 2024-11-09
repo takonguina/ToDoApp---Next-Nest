@@ -12,5 +12,5 @@ export const databaseConfig: SequelizeOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   models: [User],
-  sync: { force: true },
+  sync: { alter: true },
 };
