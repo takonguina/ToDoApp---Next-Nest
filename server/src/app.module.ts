@@ -1,5 +1,4 @@
 import { Module, OnModuleInit } from '@nestjs/common';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
@@ -18,7 +17,7 @@ import { TaskListModule } from './modules/tasklist.module';
     TaskListModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule implements OnModuleInit {
   async onModuleInit() {
