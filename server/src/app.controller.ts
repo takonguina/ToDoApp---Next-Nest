@@ -1,12 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { All, Controller, NotFoundException } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  // This route will catch all requests that do not match any other route
+  @All('*')
+  handleAll() {
+    throw new NotFoundException('This route doest not exist');
   }
 }
