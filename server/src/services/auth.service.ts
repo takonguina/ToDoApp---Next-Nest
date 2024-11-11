@@ -19,8 +19,8 @@ export class AuthService {
   ) {}
 
   // Register new user
-  async register(RegisterDto: RegisterDto): Promise<User> {
-    const { email, password, firstName, lastName } = RegisterDto;
+  async register(registerDto: RegisterDto): Promise<User> {
+    const { email, password, firstName, lastName } = registerDto;
 
     // Check if all required fields are provided
     if (!firstName || !lastName || !email || !password) {
