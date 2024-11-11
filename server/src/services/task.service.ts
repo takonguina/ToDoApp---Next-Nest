@@ -13,12 +13,19 @@ export class TaskService {
     if (!shortDescription || !dueDate) {
       throw new BadRequestException('Missing required fields');
     }
+    // Check if is a valid date
+    if (!(dueDate instanceof Date) || isNaN(dueDate.getTime())) {
+      throw new BadRequestException('Invalid date format');
+    }
 
     // Check if the due date is in the future
-    const today = new Date().setHours(0, 0, 0, 0);
-    const dueDateObj = new Date(dueDate).getTime();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    if (dueDateObj < today) {
+    const todayTimestamp = today.getTime();
+    const dueDateTimestamp = dueDate.getTime();
+
+    if (dueDateTimestamp < todayTimestamp) {
       throw new BadRequestException("Due date can't be in the past");
     }
 
