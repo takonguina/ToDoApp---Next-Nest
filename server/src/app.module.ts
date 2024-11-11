@@ -8,6 +8,7 @@ import { Sequelize } from 'sequelize-typescript';
 // modules
 import { AuthModule } from './modules/auth.module';
 import { TaskListModule } from './modules/tasklist.module';
+import { TaskModule } from './modules/task.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { TaskListModule } from './modules/tasklist.module';
     SequelizeModule.forRoot(databaseConfig),
     AuthModule,
     TaskListModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [],
