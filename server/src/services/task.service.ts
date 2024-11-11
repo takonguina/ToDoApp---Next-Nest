@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Task } from 'src/models/task.model';
-import { CreateTaskDto } from 'src/dto/createTask.dto';
+import { CreateTaskDto } from 'src/dto/create-task.dto';
 
 @Injectable()
 export class TaskService {
