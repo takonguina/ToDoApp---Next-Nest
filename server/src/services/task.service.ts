@@ -14,6 +14,14 @@ export class TaskService {
       throw new BadRequestException('Missing required fields');
     }
 
+    // Check if the due date is in the future
+    const today = new Date().setHours(0, 0, 0, 0);
+    const dueDateObj = new Date(dueDate).getTime();
+
+    if (dueDateObj < today) {
+      throw new BadRequestException("Due date can't be in the past");
+    }
+
     // Check if the task already exists
     // const existingTask = await this.taskModel.findOne({
     //   where: { shortDescription, taskListId },
