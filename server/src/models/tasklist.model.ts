@@ -3,7 +3,12 @@ import { Table, Column, Model, ForeignKey } from 'sequelize-typescript';
 
 @Table
 export class TaskList extends Model<TaskList> {
-  @Column
+  @Column({
+    validate: {
+      allowNull: false,
+      notEmpty: true,
+    },
+  })
   name: string;
 
   @ForeignKey(() => User)

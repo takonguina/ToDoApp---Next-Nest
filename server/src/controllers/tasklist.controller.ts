@@ -16,7 +16,10 @@ export class TaskListController {
   @Post()
   @UseGuards(IsAuthenticatedGuard)
   async createTaskList(@Request() req, @Body() body): Promise<any> {
-    return this.taskListService.createTaskList(body.name, req.user.id);
+    return this.taskListService.createTaskList({
+      name: body.name,
+      userId: req.user.id,
+    });
   }
 
   @Get()

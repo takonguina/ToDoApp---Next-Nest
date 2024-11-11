@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { TaskList } from 'src/models/tasklist.model';
+import { CreateTaskListDto } from 'src/dto/create-tasklist.dto';
 
 @Injectable()
 export class TaskListService {
@@ -8,7 +9,10 @@ export class TaskListService {
     @InjectModel(TaskList) private readonly taskListModel: typeof TaskList,
   ) {}
 
-  async createTaskList(name: string, userId: number): Promise<TaskList> {
+  async createTaskList(
+    createTaskListDto: CreateTaskListDto,
+  ): Promise<TaskList> {
+    const { name, userId } = createTaskListDto;
     if (!name) {
       throw new BadRequestException('Name is required');
     }

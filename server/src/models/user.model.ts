@@ -2,15 +2,25 @@ import { Column, Model, Table } from 'sequelize-typescript';
 
 @Table
 export class User extends Model<User> {
-  @Column
+  @Column({
+    validate: {
+      allowNull: false,
+      notEmpty: true,
+    },
+  })
   firstName: string;
 
-  @Column
+  @Column({
+    validate: {
+      allowNull: false,
+      notEmpty: true,
+    },
+  })
   lastName: string;
 
-  @Column({ unique: true })
+  @Column({ allowNull: false, unique: true, validate: { isEmail: true } })
   email: string;
 
-  @Column
+  @Column({ allowNull: false, validate: { notEmpty: true } })
   password: string;
 }
