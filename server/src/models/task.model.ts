@@ -6,6 +6,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { TaskList } from './tasklist.model';
+import { BadRequestException } from '@nestjs/common';
 
 @Table
 export class Task extends Model<Task> {
@@ -32,7 +33,7 @@ export class Task extends Model<Task> {
         const dueDate = new Date(value);
 
         if (dueDate.getTime() < today.setHours(0, 0, 0, 0)) {
-          throw new Error("La date d'échéance ne peut pas être dans le passé.");
+          throw new BadRequestException("Due date can't be in the past");
         }
       },
     },
