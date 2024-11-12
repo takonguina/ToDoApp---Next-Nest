@@ -1,11 +1,18 @@
+import { Task } from './task.model';
 import { User } from './user.model';
-import { Table, Column, Model, ForeignKey } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  ForeignKey,
+  HasMany,
+} from 'sequelize-typescript';
 
 @Table
 export class TaskList extends Model<TaskList> {
   @Column({
+    allowNull: false,
     validate: {
-      allowNull: false,
       notEmpty: true,
     },
   })
@@ -14,4 +21,7 @@ export class TaskList extends Model<TaskList> {
   @ForeignKey(() => User)
   @Column
   userId: number;
+
+  @HasMany(() => Task)
+  tasks: Task[];
 }

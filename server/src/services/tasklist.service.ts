@@ -1,7 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Task } from 'src/models/task.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { TaskList } from 'src/models/tasklist.model';
 import { CreateTaskListDto } from 'src/dto/create-tasklist.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class TaskListService {
@@ -29,6 +30,6 @@ export class TaskListService {
   }
 
   async getTaskLists(userId: number): Promise<TaskList[]> {
-    return this.taskListModel.findAll({ where: { userId } });
+    return this.taskListModel.findAll({ where: { userId }, include: [Task] });
   }
 }
