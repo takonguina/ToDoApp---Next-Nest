@@ -7,7 +7,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!token) {
-      return <Navigate to="/login" />;
+      <Navigate to="/login" />;
     }
   }, [token]);
 
