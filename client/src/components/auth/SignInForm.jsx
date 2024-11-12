@@ -1,8 +1,13 @@
 import axios from "axios";
-import { useState } from "react";
+import Cookies from "js-cookie";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const SignUpForm = () => {
+  // Context state
+  const { setAccessToken } = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,19 +21,26 @@ const SignUpForm = () => {
       setError("Please fill in all fields");
       return;
     }
-    console.log("Email:", email, "Password:", password);
+
     try {
-      const response = await axios.post("http://localhost:5000/auth/login", {
+      const response = await axios.post("http://localhost:3000/auth/login", {
         email: email,
         password: password,
       });
-
+      console.log(response.data);
       if (response.status === 201) {
+        setAccessToken(response.data.accessToken);
+        Cookies.set("accessToken", response.data.accessToken);
         navigate("/");
       }
     } catch (error) {
-      console.error(error.response.data);
-      setError("An error occurred. Please try again later.");
+      if (error.response.status === 401) {
+        setError("Invalid email or password");
+        return;
+      } else {
+        setError("An error occurred. Please try again later.");
+      }
+      console.log(error.response.data);
     }
   };
   return (
