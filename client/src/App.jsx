@@ -1,5 +1,5 @@
 import "./App.css";
-import AuthPage from "./Auth";
+import AuthPage from "./AuthPage";
 import HomePage from "./Home";
 import { Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
