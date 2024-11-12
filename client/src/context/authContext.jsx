@@ -1,20 +1,24 @@
-import { createContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(Cookies.get("token") || null);
+  const [accessToken, setAccessToken] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      setToken(token);
+    const accessToken = Cookies.get("accessToken");
+    if (accessToken) {
+      setAccessToken(accessToken);
+    } else {
+      navigate("/login");
     }
-  }, []);
+  }, [navigate]);
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ accessToken, setAccessToken }}>
       {children}
     </AuthContext.Provider>
   );
