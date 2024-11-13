@@ -25,6 +25,7 @@ const TaskDetails = ({ selectedTask, handleDeleteTask }) => {
           Created on {formattedDate}
         </p>
         <p className="py-2 font-semibold">{shortDescription}</p>
+        <p className="text-sm text-zinc-500">Description :</p>
         <p className="text-sm">{longDescription}</p>
       </div>
       <div
