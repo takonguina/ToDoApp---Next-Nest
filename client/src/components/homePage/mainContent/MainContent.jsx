@@ -9,8 +9,8 @@ const MainContent = ({
 }) => {
   const [isCompletedVisible, setIsCompletedVisible] = useState(false);
 
-  const completedTasks = list?.tasks.filter((task) => task.completed);
-  const incompleteTasks = list?.tasks.filter((task) => !task.completed);
+  const completedTasks = list?.tasks?.filter((task) => task.completed);
+  const incompleteTasks = list?.tasks?.filter((task) => !task.completed);
 
   return (
     <div className="flex-1 m-4 p-4 h-[calc(100%-2rem)]">
@@ -20,16 +20,18 @@ const MainContent = ({
             <p className="text-2xl font-bold mr-8">{list.name}</p>
             <p
               className={`text-2xl text-white py-1 px-2 rounded-lg ${
-                list.tasks.filter((task) => !task.completed).length > 0
+                list?.tasks?.filter((task) => !task.completed).length > 0
                   ? "bg-amber-500"
                   : "bg-green-500"
               }`}
             >
-              {list.tasks.filter((task) => !task.completed).length}
+              {list?.tasks
+                ? list?.tasks?.filter((task) => !task.completed).length
+                : 0}
             </p>
           </div>
           <div className="flex flex-col mt-8">
-            {incompleteTasks.map((task) => (
+            {incompleteTasks?.map((task) => (
               <Task
                 key={task.id}
                 task={task}
@@ -52,7 +54,7 @@ const MainContent = ({
             {isCompletedVisible && (
               <div className="mt-2">
                 <h2 className="text-lg font-bold">Completed Tasks</h2>
-                {completedTasks.map((task) => (
+                {completedTasks?.map((task) => (
                   <Task
                     key={task.id}
                     task={task}

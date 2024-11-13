@@ -23,7 +23,7 @@ const HomePage = () => {
   const [selectedList, setSelectedList] = useState(null);
 
   const selectedTaskObj =
-    taskLists[selectedList]?.tasks.find((task) => task.id === selectedTask) ||
+    taskLists[selectedList]?.tasks?.find((task) => task.id === selectedTask) ||
     null;
 
   const handleToggleTask = async (taskId) => {

@@ -36,19 +36,21 @@ const LeftSideBar = ({
           onClick={() => setIsOpen(!isOpen)}
         />
       </div>
-      {isOpen && (
-        <List
-          tasklists={tasklists}
-          selectedList={selectedList}
-          setSelectedList={setSelectedList}
-          handleDeleteTaskList={handleDeleteTaskList}
+      <div>
+        {isOpen && (
+          <List
+            tasklists={tasklists}
+            selectedList={selectedList}
+            setSelectedList={setSelectedList}
+            handleDeleteTaskList={handleDeleteTaskList}
+          />
+        )}
+        <IoIosAddCircle
+          size={36}
+          className="cursor-pointer mx-auto"
+          onClick={() => openModal()}
         />
-      )}
-      <IoIosAddCircle
-        size={36}
-        className="cursor-pointer"
-        onClick={() => openModal()}
-      />
+      </div>
       <CreateListModal
         isOpen={showModal}
         onClose={closeModal}

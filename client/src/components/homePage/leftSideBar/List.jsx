@@ -14,8 +14,8 @@ const List = ({
   const closeModal = () => setShowModal(false);
 
   return (
-    <div className="flex flex-col gap-2">
-      {tasklists.map((tasklist, index) => (
+    <div className="flex flex-col gap-2 mb-2">
+      {tasklists?.map((tasklist, index) => (
         <div
           key={tasklist.id}
           className={`group flex justify-between items-center p-2 rounded-lg hover:bg-zinc-100 cursor-pointer ${
@@ -23,7 +23,20 @@ const List = ({
           }`}
           onClick={() => setSelectedList(index)}
         >
-          <p className="text-lg font-semibold text-zinc-800">{tasklist.name}</p>
+          <div className="flex justify-center items-center">
+            <p className="text-lg font-semibold text-zinc-800 mr-2">
+              {tasklist.name}
+            </p>
+            <p
+              className={`text-sm bg-zinc-100 px-1 rounded-lg ${
+                selectedList === index ? "bg-zinc-200" : "bg-zinc-100"
+              }`}
+            >
+              {tasklist?.tasks
+                ? tasklist?.tasks?.filter((task) => !task.completed).length
+                : 0}
+            </p>
+          </div>
           <IoTrash
             size={20}
             className={`text-zinc-500 hover:text-red-600 ${

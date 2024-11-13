@@ -53,7 +53,7 @@ const CreateListModal = ({ isOpen, onClose, onConfirm }) => {
                       setError("Please enter a list name");
                       return;
                     }
-                    console.log(listName), onConfirm(listName), onClose();
+                    onConfirm(listName), setListName(""), onClose();
                   }}
                 >
                   Create
