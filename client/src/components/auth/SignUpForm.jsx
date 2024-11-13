@@ -1,12 +1,11 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import SubmitButton from "./SubmitButton";
 
 const SignUpForm = () => {
-  const { setAccessToken } = useContext(AuthContext);
+  const { handleTokens } = useContext(AuthContext);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -40,8 +39,8 @@ const SignUpForm = () => {
       });
 
       if (response.status === 201) {
-        setAccessToken(response.data.accessToken);
-        Cookies.set("accessToken", response.data.accessToken);
+        handleTokens(response.data.accessToken, response.data.refreshToken);
+        navigate("/");
         navigate("/");
       }
     } catch (error) {

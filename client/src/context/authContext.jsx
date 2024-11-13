@@ -10,6 +10,12 @@ export const AuthProvider = ({ children }) => {
     Cookies.get("accessToken") || null
   );
 
+  const handleTokens = (accessToken, refreshToken) => {
+    setAccessToken(accessToken);
+    Cookies.set("accessToken", accessToken);
+    Cookies.set("refreshToken", refreshToken);
+  };
+
   const logout = () => {
     Cookies.remove("accessToken");
     setAccessToken(null);
@@ -24,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   }, [navigate, accessToken]);
 
   return (
-    <AuthContext.Provider value={{ accessToken, setAccessToken, logout }}>
+    <AuthContext.Provider value={{ accessToken, handleTokens, logout }}>
       {children}
     </AuthContext.Provider>
   );
