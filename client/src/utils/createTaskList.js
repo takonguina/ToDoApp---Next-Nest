@@ -1,6 +1,10 @@
 import axios from "axios";
 
-const createTaskList = async (taskListName, setTaskLists, accessToken) => {
+export const createTaskList = async (
+  taskListName,
+  setTaskLists,
+  accessToken
+) => {
   try {
     const response = await axios.post(
       "http://localhost:3000/tasklist",
@@ -21,5 +25,3 @@ const createTaskList = async (taskListName, setTaskLists, accessToken) => {
     console.log(error.response.data);
   }
 };
-
-export default createTaskList;

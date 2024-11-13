@@ -7,6 +7,7 @@ const MainContent = ({
   selectedTask,
   setSelectedTask,
   handleToggleTask,
+  handleCreatTask,
 }) => {
   const [isCompletedVisible, setIsCompletedVisible] = useState(false);
 
@@ -84,6 +85,7 @@ const MainContent = ({
             isOpen={showModal}
             onClose={closeModal}
             listId={list.id}
+            onConfirm={handleCreatTask}
           />
         </div>
       ) : (

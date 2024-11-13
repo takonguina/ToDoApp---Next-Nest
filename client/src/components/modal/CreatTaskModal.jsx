@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Styles pour le date picker
+import "react-datepicker/dist/react-datepicker.css"; // Styles for the date picker
 
 const CreateTaskModal = ({ isOpen, onClose, onConfirm }) => {
   const [error, setError] = useState("");
@@ -24,7 +24,7 @@ const CreateTaskModal = ({ isOpen, onClose, onConfirm }) => {
       return;
     }
     // Appel à onConfirm avec les données de la tâche
-    onConfirm({ taskTitle, description, dueDate });
+    onConfirm(taskTitle, description, dueDate);
     setTaskTitle("");
     setDescription("");
     setDueDate(null);
@@ -88,8 +88,9 @@ const CreateTaskModal = ({ isOpen, onClose, onConfirm }) => {
                     }}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     placeholderText="Select due date"
-                    dateFormat="MMMM d, yyyy"
+                    dateFormat="yyyy-MM-dd"
                     minDate={new Date()}
+                    disabledKeyboardNavigation
                   />
                 </div>
                 <p className="text-red-500 text-sm mt-2">{error}</p>
@@ -98,7 +99,7 @@ const CreateTaskModal = ({ isOpen, onClose, onConfirm }) => {
                 <button
                   type="button"
                   className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
-                  onClick={handleConfirm}
+                  onClick={() => handleConfirm()}
                 >
                   Add Task
                 </button>
