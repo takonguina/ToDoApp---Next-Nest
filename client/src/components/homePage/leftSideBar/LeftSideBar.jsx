@@ -4,7 +4,12 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import List from "./List";
 import Logout from "./Logout";
 
-const LeftSideBar = ({ tasklists, selectedList, setSelectedList }) => {
+const LeftSideBar = ({
+  tasklists,
+  selectedList,
+  setSelectedList,
+  handleDeleteTaskList,
+}) => {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div
@@ -28,6 +33,7 @@ const LeftSideBar = ({ tasklists, selectedList, setSelectedList }) => {
           tasklists={tasklists}
           selectedList={selectedList}
           setSelectedList={setSelectedList}
+          handleDeleteTaskList={handleDeleteTaskList}
         />
       )}
       <Logout isOpen={isOpen} />

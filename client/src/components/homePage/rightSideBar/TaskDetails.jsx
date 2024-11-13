@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IoTrash } from "react-icons/io5";
-import Modal from "../../modal/Modal";
+import DeleteModal from "../../modal/DeleteModal";
 
 const TaskDetails = ({ selectedTask, handleDeleteTask }) => {
   // Destructuring the selected task
@@ -35,7 +35,7 @@ const TaskDetails = ({ selectedTask, handleDeleteTask }) => {
         <IoTrash size={20} className="mr-2" />
         <p className="font-bold">Delete Task</p>
       </div>
-      <Modal
+      <DeleteModal
         isOpen={showModal}
         onClose={closeModal}
         title="Delete Task"

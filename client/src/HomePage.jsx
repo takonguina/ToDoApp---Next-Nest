@@ -11,6 +11,7 @@ import MainContent from "./components/homePage/mainContent/MainContent";
 // Utils
 import { toggleTask } from "./utils/toggleTask";
 import { deleteTask } from "./utils/deleteTask";
+import { deleteTaskList } from "./utils/deleteTaskList";
 
 const HomePage = () => {
   const { accessToken } = useContext(AuthContext);
@@ -44,6 +45,10 @@ const HomePage = () => {
     );
   };
 
+  const handleDeleteTaskList = async (taskListId) => {
+    await deleteTaskList(taskListId, accessToken, taskLists, setTaskLists);
+  };
+
   useEffect(() => {
     const handleTaskLists = async () => {
       try {
@@ -72,6 +77,7 @@ const HomePage = () => {
         tasklists={taskLists}
         selectedList={selectedList}
         setSelectedList={setSelectedList}
+        handleDeleteTaskList={handleDeleteTaskList}
       />
       <MainContent
         list={taskLists[selectedList]}
