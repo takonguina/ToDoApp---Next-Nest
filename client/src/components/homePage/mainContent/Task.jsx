@@ -1,7 +1,7 @@
 import { FaCalendarXmark } from "react-icons/fa6";
 
-const Task = ({ task, index, selectedTask, setSelectedTask }) => {
-  const { shortDescription, longDescription, completed, dueDate } = task;
+const Task = ({ task, selectedTask, setSelectedTask }) => {
+  const { id, shortDescription, longDescription, completed, dueDate } = task;
 
   const formattedDate = new Date(dueDate).toLocaleDateString("fr-FR", {
     day: "numeric",
@@ -12,7 +12,12 @@ const Task = ({ task, index, selectedTask, setSelectedTask }) => {
   return (
     <div>
       <div className="h-[1px] w-full bg-zinc-300"></div>
-      <div className="flex p-2">
+      <div
+        className={`group flex my-1 p-2 cursor-pointer hover:bg-zinc-100 rounded-lg ${
+          selectedTask?.id === id ? "bg-zinc-100" : ""
+        }`}
+        onClick={() => setSelectedTask(id)}
+      >
         <div>
           <input
             type="checkbox"

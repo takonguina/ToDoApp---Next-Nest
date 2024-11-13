@@ -13,8 +13,16 @@ const HomePage = () => {
 
   // States
   const [taskLists, setTaskLists] = useState([]);
-  const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedTask, setSelectedTask] = useState(null); // Task ID
   const [selectedList, setSelectedList] = useState(null);
+
+  const selectedTaskObj =
+    taskLists[selectedList]?.tasks.find((task) => task.id === selectedTask) ||
+    null;
+
+  useEffect(() => {
+    console.log(selectedList);
+  }, [selectedList]);
 
   useEffect(() => {
     const handleTaskLists = async () => {
@@ -47,10 +55,14 @@ const HomePage = () => {
       />
       <MainContent
         list={taskLists[selectedList]}
-        task={taskLists[selectedList]?.tasks[selectedTask] || null}
+        selectedTask={selectedTaskObj}
         setSelectedTask={setSelectedTask}
       />
-      <RightSideBar />
+
+      <RightSideBar
+        selectedTask={selectedTaskObj}
+        selectedList={selectedList}
+      />
     </div>
   );
 };

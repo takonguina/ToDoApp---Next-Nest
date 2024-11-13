@@ -12,10 +12,9 @@ const MainContent = ({ list, selectedTask, setSelectedTask }) => {
             </p>
           </div>
           <div className="flex flex-col mt-8">
-            {list.tasks.map((task, index) => (
+            {list.tasks.map((task) => (
               <Task
                 key={task.id}
-                index={index}
                 task={task}
                 selectedTask={selectedTask}
                 setSelectedTask={setSelectedTask}
