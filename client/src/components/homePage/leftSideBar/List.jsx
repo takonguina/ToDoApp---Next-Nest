@@ -11,7 +11,7 @@ const List = ({ tasklists, selectedList, setSelectedList }) => {
         >
           <p className="text-lg font-semibold text-zinc-800">{tasklist.name}</p>
           <p className="text-sm text-zinc-600 bg-zinc-100 py-1 px-2 rounded-lg">
-            {tasklist.tasks.length}
+            {tasklist.tasks.filter((task) => !task.completed).length}
           </p>
         </div>
       ))}

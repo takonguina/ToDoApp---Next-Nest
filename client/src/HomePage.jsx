@@ -8,6 +8,9 @@ import RightSideBar from "./components/homePage/rightSideBar/RightSideBar";
 import LeftSideBar from "./components/homePage/leftSideBar/LeftSideBar";
 import MainContent from "./components/homePage/mainContent/MainContent";
 
+// Utils
+import { toggleTask } from "./utils/toggleTask";
+
 const HomePage = () => {
   const { accessToken } = useContext(AuthContext);
 
@@ -20,9 +23,15 @@ const HomePage = () => {
     taskLists[selectedList]?.tasks.find((task) => task.id === selectedTask) ||
     null;
 
-  useEffect(() => {
-    console.log(selectedList);
-  }, [selectedList]);
+  const handleToggleTask = async (taskId) => {
+    await toggleTask(
+      taskId,
+      taskLists,
+      selectedList,
+      setTaskLists,
+      accessToken
+    );
+  };
 
   useEffect(() => {
     const handleTaskLists = async () => {
@@ -57,6 +66,7 @@ const HomePage = () => {
         list={taskLists[selectedList]}
         selectedTask={selectedTaskObj}
         setSelectedTask={setSelectedTask}
+        handleToggleTask={handleToggleTask}
       />
 
       <RightSideBar
