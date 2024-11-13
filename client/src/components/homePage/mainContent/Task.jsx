@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { FaCalendarXmark } from "react-icons/fa6";
+import { TaskContext } from "../../../context/taskContext";
 
-const Task = ({ task, selectedTask, setSelectedTask, handleToggleTask }) => {
+const Task = ({ task }) => {
   const { id, shortDescription, longDescription, completed, dueDate } = task;
-
+  const { selectedTaskListObj, setSelectedTask, handleToggleTask } =
+    useContext(TaskContext);
   const formattedDate = new Date(dueDate).toLocaleDateString("fr-FR", {
     day: "numeric",
     month: "short",
@@ -14,7 +17,7 @@ const Task = ({ task, selectedTask, setSelectedTask, handleToggleTask }) => {
       <div className="h-[1px] w-full bg-zinc-300"></div>
       <div
         className={`group flex my-1 p-2 cursor-pointer hover:bg-zinc-100 rounded-lg ${
-          selectedTask?.id === id ? "bg-zinc-100" : ""
+          selectedTaskListObj?.id === id ? "bg-zinc-100" : ""
         }`}
         onClick={() => setSelectedTask(id)}
       >

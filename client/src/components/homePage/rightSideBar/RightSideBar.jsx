@@ -1,17 +1,21 @@
+import { useContext } from "react";
 import TaskDetails from "./TaskDetails";
+import { TaskContext } from "../../../context/taskContext";
 
-const RightSideBar = ({ selectedTask, selectedList, handleDeleteTask }) => {
+const RightSideBar = () => {
+  const { selectedTaskObj, selectedList, handleDeleteTask } =
+    useContext(TaskContext);
   return (
     <div
       className={`m-4 p-4 rounded-xl transition-all duration-300 ease-in-out bg-zinc-200 min-w-64 ${
         selectedList !== null ? "w-64" : "w-0 hidden"
       }`}
     >
-      {selectedTask ? (
+      {selectedTaskObj ? (
         <div className="h-[calc(100%-2rem)]">
           <p className="text-lg font-bold text-zinc-700">Task :</p>
           <TaskDetails
-            selectedTask={selectedTask}
+            selectedTask={selectedTaskObj}
             handleDeleteTask={handleDeleteTask}
           />
         </div>

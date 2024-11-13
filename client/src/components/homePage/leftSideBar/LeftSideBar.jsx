@@ -1,18 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosAddCircle } from "react-icons/io";
 
 import List from "./List";
 import Logout from "./Logout";
 import CreateListModal from "../../modal/CreateListModal";
+import { TaskContext } from "../../../context/taskContext";
 
-const LeftSideBar = ({
-  tasklists,
-  selectedList,
-  setSelectedList,
-  handleDeleteTaskList,
-  handleCreateTaskList,
-}) => {
+const LeftSideBar = () => {
+  const { handleCreateTaskList } = useContext(TaskContext);
   const [isOpen, setIsOpen] = useState(true);
 
   // Modal
@@ -36,14 +32,7 @@ const LeftSideBar = ({
         />
       </div>
       <div>
-        {isOpen && (
-          <List
-            tasklists={tasklists}
-            selectedList={selectedList}
-            setSelectedList={setSelectedList}
-            handleDeleteTaskList={handleDeleteTaskList}
-          />
-        )}
+        {isOpen && <List />}
         <IoIosAddCircle
           size={36}
           className={`cursor-pointer mx-auto hover:text-green-600`}
