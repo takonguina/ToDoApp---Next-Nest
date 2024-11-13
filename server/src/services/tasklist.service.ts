@@ -8,6 +8,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 export class TaskListService {
   constructor(
     @InjectModel(TaskList) private readonly taskListModel: typeof TaskList,
+    @InjectModel(Task) private readonly taskModel: typeof Task,
   ) {}
 
   async createTaskList(
@@ -31,5 +32,19 @@ export class TaskListService {
 
   async getTaskLists(userId: number): Promise<TaskList[]> {
     return this.taskListModel.findAll({ where: { userId }, include: [Task] });
+  }
+
+  async deleteTaskList(taskListId: number): Promise<{ message: string }> {
+    const taskList = await this.taskListModel.findOne({
+      where: { id: taskListId },
+    });
+
+    if (!taskList) {
+      throw new BadRequestException('Task list not found');
+    }
+
+    await taskList.destroy();
+
+    return { message: 'Task list deleted' };
   }
 }

@@ -4,6 +4,7 @@ import { Task } from 'src/models/task.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { TaskList } from 'src/models/tasklist.model';
 import { TaskListService } from 'src/services/tasklist.service';
+import { isAuthorizedGuard } from 'src/guards/is-authorized.guard';
 import { TaskListController } from 'src/controllers/tasklist.controller';
 import { IsAuthenticatedGuard } from 'src/guards/is-authenticated.guard';
 
@@ -16,6 +17,6 @@ import { IsAuthenticatedGuard } from 'src/guards/is-authenticated.guard';
     }),
   ],
   controllers: [TaskListController],
-  providers: [TaskListService, IsAuthenticatedGuard],
+  providers: [TaskListService, IsAuthenticatedGuard, isAuthorizedGuard],
 })
 export class TaskListModule {}
