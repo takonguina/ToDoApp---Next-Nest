@@ -9,11 +9,8 @@ import LeftSideBar from "./components/homePage/leftSideBar/LeftSideBar";
 import MainContent from "./components/homePage/mainContent/MainContent";
 
 // Utils
-import { toggleTask } from "./utils/toggleTask";
-import { deleteTask } from "./utils/deleteTask";
-import { deleteTaskList } from "./utils/deleteTaskList";
-import { createTaskList } from "./utils/createTaskList";
-import { createTask } from "./utils/createTask";
+import { createTask, toggleTask, deleteTask } from "./utils/task";
+import { createTaskList, deleteTaskList } from "./utils/taskList";
 
 const HomePage = () => {
   const { accessToken } = useContext(AuthContext);
