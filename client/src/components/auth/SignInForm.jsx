@@ -34,13 +34,15 @@ const SignUpForm = () => {
         navigate("/");
       }
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         setError("Invalid email or password");
-        return;
+      } else if (error.request) {
+        setError(
+          "No response from server. Please check your connection or try again later."
+        );
       } else {
         setError("An error occurred. Please try again later.");
       }
-      console.log(error.response.data);
     }
   };
   return (

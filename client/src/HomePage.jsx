@@ -8,6 +8,10 @@ import RightSideBar from "./components/homePage/rightSideBar/RightSideBar";
 import LeftSideBar from "./components/homePage/leftSideBar/LeftSideBar";
 import MainContent from "./components/homePage/mainContent/MainContent";
 
+// Utils
+import { createTask, toggleTask, deleteTask } from "./utils/task";
+import { createTaskList, deleteTaskList } from "./utils/taskList";
+
 const HomePage = () => {
   const { accessToken } = useContext(AuthContext);
 
@@ -17,12 +21,52 @@ const HomePage = () => {
   const [selectedList, setSelectedList] = useState(null);
 
   const selectedTaskObj =
-    taskLists[selectedList]?.tasks.find((task) => task.id === selectedTask) ||
+    taskLists[selectedList]?.tasks?.find((task) => task.id === selectedTask) ||
     null;
 
-  useEffect(() => {
-    console.log(selectedList);
-  }, [selectedList]);
+  const handleToggleTask = async (taskId) => {
+    await toggleTask(
+      taskId,
+      taskLists,
+      selectedList,
+      setTaskLists,
+      accessToken
+    );
+  };
+
+  const handleCreatTask = async (
+    shortDescription,
+    longDescription,
+    dueDate
+  ) => {
+    await createTask(
+      shortDescription,
+      longDescription,
+      dueDate,
+      taskLists,
+      setTaskLists,
+      taskLists[selectedList].id,
+      accessToken
+    );
+  };
+
+  const handleDeleteTask = async (taskId) => {
+    await deleteTask(
+      taskId,
+      taskLists,
+      selectedList,
+      setTaskLists,
+      accessToken
+    );
+  };
+
+  const handleCreateTaskList = async (taskListName) => {
+    await createTaskList(taskListName, setTaskLists, accessToken);
+  };
+
+  const handleDeleteTaskList = async (taskListId) => {
+    await deleteTaskList(taskListId, accessToken, taskLists, setTaskLists);
+  };
 
   useEffect(() => {
     const handleTaskLists = async () => {
@@ -32,7 +76,6 @@ const HomePage = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        console.log(response.data);
         if (response.status === 200) {
           setTaskLists(response.data);
         }
@@ -52,16 +95,21 @@ const HomePage = () => {
         tasklists={taskLists}
         selectedList={selectedList}
         setSelectedList={setSelectedList}
+        handleDeleteTaskList={handleDeleteTaskList}
+        handleCreateTaskList={handleCreateTaskList}
       />
       <MainContent
         list={taskLists[selectedList]}
         selectedTask={selectedTaskObj}
         setSelectedTask={setSelectedTask}
+        handleToggleTask={handleToggleTask}
+        handleCreatTask={handleCreatTask}
       />
 
       <RightSideBar
         selectedTask={selectedTaskObj}
         selectedList={selectedList}
+        handleDeleteTask={handleDeleteTask}
       />
     </div>
   );
