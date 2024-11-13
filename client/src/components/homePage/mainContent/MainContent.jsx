@@ -45,13 +45,13 @@ const MainContent = ({
               onClick={() => setIsCompletedVisible(!isCompletedVisible)}
             >
               {isCompletedVisible
-                ? "Masquer les tâches terminées"
-                : "Voir les tâches terminées"}
+                ? "Hide completed tasks"
+                : "View completed tasks"}
             </button>
 
             {isCompletedVisible && (
               <div className="mt-2">
-                <h2 className="text-lg font-bold">Tâches Terminées</h2>
+                <h2 className="text-lg font-bold">Completed Tasks</h2>
                 {completedTasks.map((task) => (
                   <Task
                     key={task.id}
