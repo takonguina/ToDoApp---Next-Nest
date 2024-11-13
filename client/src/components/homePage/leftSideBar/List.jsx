@@ -51,7 +51,7 @@ const List = ({
         isOpen={showModal}
         onClose={closeModal}
         title="Delete List"
-        message="Are you sure you want to delete this list? This action cannot be undone."
+        message="Are you sure you want to delete this list? All associated tasks will be deleted. This action cannot be undone."
         onConfirm={() => handleDeleteTaskList(tasklists[selectedList].id)}
         buttonText="Delete"
         cancelButtonText="Cancel"

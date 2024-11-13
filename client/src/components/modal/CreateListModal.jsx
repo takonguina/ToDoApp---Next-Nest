@@ -29,6 +29,9 @@ const CreateListModal = ({ isOpen, onClose, onConfirm }) => {
                     >
                       Create Task List
                     </h3>
+                    <p className="text-sm text-zinc-500">
+                      Please choose a unique name for your task list.
+                    </p>
                   </div>
                 </div>
                 <div className="mt-4">
