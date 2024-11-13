@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import SubmitButton from "./SubmitButton";
 
 const SignUpForm = () => {
   // Context state
@@ -77,12 +78,7 @@ const SignUpForm = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <button
-        type="submit"
-        className="w-full mt-2 p-3 text-white font-semibold rounded-lg shadow-md transition-all duration-500 bg-gradient-to-tl from-blue-600 to-blue-600 via-cyan-400 bg-size-200 bg-pos-0 hover:bg-pos-100"
-      >
-        Sign In
-      </button>
+      <SubmitButton text="Sign In" />
       <p className="text-red-500 text-center">{error}</p>
     </form>
   );
