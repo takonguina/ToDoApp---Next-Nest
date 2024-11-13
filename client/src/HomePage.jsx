@@ -10,6 +10,7 @@ import MainContent from "./components/homePage/mainContent/MainContent";
 
 // Utils
 import { toggleTask } from "./utils/toggleTask";
+import { deleteTask } from "./utils/deleteTask";
 
 const HomePage = () => {
   const { accessToken } = useContext(AuthContext);
@@ -25,6 +26,16 @@ const HomePage = () => {
 
   const handleToggleTask = async (taskId) => {
     await toggleTask(
+      taskId,
+      taskLists,
+      selectedList,
+      setTaskLists,
+      accessToken
+    );
+  };
+
+  const handleDeleteTask = async (taskId) => {
+    await deleteTask(
       taskId,
       taskLists,
       selectedList,
@@ -72,6 +83,7 @@ const HomePage = () => {
       <RightSideBar
         selectedTask={selectedTaskObj}
         selectedList={selectedList}
+        handleDeleteTask={handleDeleteTask}
       />
     </div>
   );

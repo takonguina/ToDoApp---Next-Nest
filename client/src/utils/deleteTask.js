@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const toggleTask = async (
+export const deleteTask = async (
   taskId,
   taskLists,
   selectedList,
@@ -8,9 +8,8 @@ export const toggleTask = async (
   accessToken
 ) => {
   try {
-    const response = await axios.patch(
+    const response = await axios.delete(
       `http://localhost:3000/task/${taskId}`,
-      {},
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -20,10 +19,9 @@ export const toggleTask = async (
     if (response.status === 200) {
       // Updating the taskLists state
       const updatedTaskLists = [...taskLists];
-      const updatedTask = updatedTaskLists[selectedList].tasks.find(
-        (task) => task.id === taskId
-      );
-      updatedTask.completed = !updatedTask.completed;
+      updatedTaskLists[selectedList].tasks = updatedTaskLists[
+        selectedList
+      ].tasks.filter((task) => task.id !== taskId);
       setTaskLists(updatedTaskLists);
     }
   } catch (error) {
