@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Task from "./Task";
+import CreateTaskModal from "../../modal/CreatTaskModal";
 
 const MainContent = ({
   list,
@@ -11,6 +12,11 @@ const MainContent = ({
 
   const completedTasks = list?.tasks?.filter((task) => task.completed);
   const incompleteTasks = list?.tasks?.filter((task) => !task.completed);
+
+  // Modal
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
   return (
     <div className="flex-1 m-4 p-4 h-[calc(100%-2rem)]">
@@ -29,6 +35,14 @@ const MainContent = ({
                 ? list?.tasks?.filter((task) => !task.completed).length
                 : 0}
             </p>
+          </div>
+          <div className="flex justify-start mt-4">
+            <button
+              className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-500"
+              onClick={() => openModal(true)} // Ouvre la modal
+            >
+              Add New Task
+            </button>
           </div>
           <div className="flex flex-col mt-8">
             {incompleteTasks?.map((task) => (
@@ -66,6 +80,11 @@ const MainContent = ({
               </div>
             )}
           </div>
+          <CreateTaskModal
+            isOpen={showModal}
+            onClose={closeModal}
+            listId={list.id}
+          />
         </div>
       ) : (
         <div className="flex justify-center items-center h-full text-center">
