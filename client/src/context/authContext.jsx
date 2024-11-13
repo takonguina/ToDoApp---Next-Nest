@@ -5,10 +5,15 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState(
     Cookies.get("accessToken") || null
   );
-  const navigate = useNavigate();
+
+  const logout = () => {
+    Cookies.remove("accessToken");
+    setAccessToken(null);
+  };
 
   useEffect(() => {
     if (!accessToken) {
@@ -19,7 +24,7 @@ export const AuthProvider = ({ children }) => {
   }, [navigate, accessToken]);
 
   return (
-    <AuthContext.Provider value={{ accessToken, setAccessToken }}>
+    <AuthContext.Provider value={{ accessToken, setAccessToken, logout }}>
       {children}
     </AuthContext.Provider>
   );
