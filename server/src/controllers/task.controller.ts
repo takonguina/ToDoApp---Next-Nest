@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Patch,
   Post,
   Request,
   UseGuards,
@@ -28,10 +29,16 @@ export class TaskController {
   }
 
   // route delete task
-  @Delete(':taskListId/:taskId')
+  @Delete(':taskId')
   @UseGuards(IsAuthenticatedGuard, isAuthorizedGuard)
   async deleteTask(@Request() req): Promise<{ message: string }> {
-    const taskId = parseInt(req.params.taskId);
-    return this.taskService.deleteTask(taskId, req.params.taskListId);
+    return this.taskService.deleteTask(req.params.taskId);
+  }
+
+  // route update task
+  @Patch(':taskId')
+  @UseGuards(IsAuthenticatedGuard, isAuthorizedGuard)
+  async updateTask(@Request() req): Promise<Task> {
+    return this.taskService.updateTask(req.params.taskId);
   }
 }

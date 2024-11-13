@@ -48,12 +48,9 @@ export class TaskService {
     });
   }
 
-  async deleteTask(
-    taskId: number,
-    taskListId: number,
-  ): Promise<{ message: string }> {
+  async deleteTask(taskId: number): Promise<{ message: string }> {
     const task = await this.taskModel.findOne({
-      where: { id: taskId, taskListId: taskListId },
+      where: { id: taskId },
     });
 
     if (!task) {
@@ -62,5 +59,20 @@ export class TaskService {
 
     await task.destroy();
     return { message: 'Task successfully deleted' };
+  }
+
+  async updateTask(taskId: number): Promise<Task> {
+    const task = await this.taskModel.findOne({
+      where: { id: taskId },
+    });
+
+    if (!task) {
+      throw new BadRequestException('Task not found');
+    }
+
+    task.completed = !task.completed;
+    await task.save();
+
+    return task;
   }
 }
