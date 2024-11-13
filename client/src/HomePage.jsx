@@ -12,6 +12,7 @@ import MainContent from "./components/homePage/mainContent/MainContent";
 import { toggleTask } from "./utils/toggleTask";
 import { deleteTask } from "./utils/deleteTask";
 import { deleteTaskList } from "./utils/deleteTaskList";
+import createTaskList from "./utils/createTaskList";
 
 const HomePage = () => {
   const { accessToken } = useContext(AuthContext);
@@ -45,6 +46,10 @@ const HomePage = () => {
     );
   };
 
+  const handleCreateTaskList = async (taskListName) => {
+    await createTaskList(taskListName, setTaskLists, accessToken);
+  };
+
   const handleDeleteTaskList = async (taskListId) => {
     await deleteTaskList(taskListId, accessToken, taskLists, setTaskLists);
   };
@@ -57,7 +62,6 @@ const HomePage = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        console.log(response.data);
         if (response.status === 200) {
           setTaskLists(response.data);
         }
@@ -78,6 +82,7 @@ const HomePage = () => {
         selectedList={selectedList}
         setSelectedList={setSelectedList}
         handleDeleteTaskList={handleDeleteTaskList}
+        handleCreateTaskList={handleCreateTaskList}
       />
       <MainContent
         list={taskLists[selectedList]}

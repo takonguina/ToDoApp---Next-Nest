@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-const CreateListModal = ({ isOpen, onClose }) => {
+const CreateListModal = ({ isOpen, onClose, onConfirm }) => {
+  const [error, setError] = useState("");
   const [listName, setListName] = useState("");
 
   return (
@@ -36,8 +37,11 @@ const CreateListModal = ({ isOpen, onClose }) => {
                     placeholder="Task list name"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     value={listName}
-                    onChange={(e) => setListName(e.target.value)}
+                    onChange={(e) => {
+                      setError(""), setListName(e.target.value);
+                    }}
                   />
+                  <p className="text-red-500 text-sm">{error}</p>
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
@@ -45,7 +49,11 @@ const CreateListModal = ({ isOpen, onClose }) => {
                   type="button"
                   className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
                   onClick={() => {
-                    console.log(listName), onClose();
+                    if (!listName) {
+                      setError("Please enter a list name");
+                      return;
+                    }
+                    console.log(listName), onConfirm(listName), onClose();
                   }}
                 >
                   Create

@@ -11,6 +11,7 @@ const LeftSideBar = ({
   selectedList,
   setSelectedList,
   handleDeleteTaskList,
+  handleCreateTaskList,
 }) => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -48,7 +49,11 @@ const LeftSideBar = ({
         className="cursor-pointer"
         onClick={() => openModal()}
       />
-      <CreateListModal isOpen={showModal} onClose={closeModal} />
+      <CreateListModal
+        isOpen={showModal}
+        onClose={closeModal}
+        onConfirm={handleCreateTaskList}
+      />
       <Logout isOpen={isOpen} />
     </div>
   );
