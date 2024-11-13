@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+
+import List from "./List";
 import Logout from "./Logout";
 
-const LeftSideBar = () => {
+const LeftSideBar = ({ tasklists, selectedList, setSelectedList }) => {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div
@@ -21,6 +23,13 @@ const LeftSideBar = () => {
           onClick={() => setIsOpen(!isOpen)}
         />
       </div>
+      {isOpen && (
+        <List
+          tasklists={tasklists}
+          selectedList={selectedList}
+          setSelectedList={setSelectedList}
+        />
+      )}
       <Logout isOpen={isOpen} />
     </div>
   );
