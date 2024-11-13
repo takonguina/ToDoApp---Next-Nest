@@ -29,10 +29,9 @@ const LeftSideBar = ({
         {isOpen && <p className="text-2xl font-bold text-[#595959]">Menu</p>}
         <GiHamburgerMenu
           size={36}
-          className={`cursor-pointer transform transition-transform duration-300 ${
+          className={`cursor-pointer transform transition-transform duration-300 text-[#595959] hover:text-black ${
             isOpen ? "" : "rotate-90"
           }`}
-          style={{ color: "#595959" }}
           onClick={() => setIsOpen(!isOpen)}
         />
       </div>
@@ -47,7 +46,7 @@ const LeftSideBar = ({
         )}
         <IoIosAddCircle
           size={36}
-          className="cursor-pointer mx-auto"
+          className={`cursor-pointer mx-auto hover:text-green-600`}
           onClick={() => openModal()}
         />
       </div>
