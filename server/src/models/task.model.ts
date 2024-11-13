@@ -39,6 +39,9 @@ export class Task extends Model<Task> {
   taskListId: number;
 
   // Define the relationship between the Task and TaskList models
-  @BelongsTo(() => TaskList)
+  @BelongsTo(() => TaskList, {
+    // When a TaskList is deleted, delete all associated tasks
+    onDelete: 'CASCADE',
+  })
   taskList: TaskList;
 }
