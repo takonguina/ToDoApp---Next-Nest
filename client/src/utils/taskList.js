@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../service/api";
 
 // Create a tasklist
 export const createTaskList = async (
@@ -10,7 +10,7 @@ export const createTaskList = async (
   setListName
 ) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       "http://localhost:3000/tasklist",
       {
         name: taskListName,
@@ -48,7 +48,7 @@ export const deleteTaskList = async (
   setTaskLists
 ) => {
   try {
-    const response = await axios.delete(
+    const response = await api.delete(
       `http://localhost:3000/tasklist/${taskListId}`,
       {
         headers: {
