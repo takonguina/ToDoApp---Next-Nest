@@ -2,7 +2,11 @@ import { Task } from 'src/models/task.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { TaskList } from 'src/models/tasklist.model';
 import { CreateTaskListDto } from 'src/dto/create-tasklist.dto';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 
 @Injectable()
 export class TaskListService {
@@ -24,7 +28,7 @@ export class TaskListService {
       where: { name, userId },
     });
     if (existingTaskList) {
-      throw new BadRequestException('Task list already exists');
+      throw new ConflictException('Task list already exists');
     }
 
     return this.taskListModel.create({ name, userId });
