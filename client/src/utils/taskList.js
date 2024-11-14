@@ -6,7 +6,8 @@ export const createTaskList = async (
   setTaskLists,
   accessToken,
   setError,
-  onClose
+  onClose,
+  setListName
 ) => {
   try {
     const response = await axios.post(
@@ -22,14 +23,20 @@ export const createTaskList = async (
     );
     if (response.status === 201) {
       // Updating the taskLists state
-      setTaskLists((prevTaskLists) => [...prevTaskLists, response.data]);
+      setTaskLists((prevTaskLists) => [
+        ...prevTaskLists,
+        { ...response.data, tasks: response.data.tasks || [] },
+      ]);
+      setListName("");
       onClose();
     }
   } catch (error) {
     if (error.response && error.response.status === 409) {
       setError("Task list already exists");
+    } else {
+      setError("Something went wrong. Please try again later.");
     }
-    console.log(error.response.data);
+    console.log(error.response);
   }
 };
 
