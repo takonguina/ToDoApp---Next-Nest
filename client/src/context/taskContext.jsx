@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { createTask, toggleTask, deleteTask } from "../utils/task";
-import { createTaskList, deleteTaskList } from "../utils/taskList";
+import { deleteTaskList } from "../utils/taskList";
 
 export const TaskContext = createContext();
 
@@ -59,10 +59,6 @@ export const TaskProvider = ({ children }) => {
     );
   };
 
-  const handleCreateTaskList = async (taskListName) => {
-    await createTaskList(taskListName, setTaskLists, accessToken);
-  };
-
   const handleDeleteTaskList = async (taskListId) => {
     await deleteTaskList(taskListId, accessToken, taskLists, setTaskLists);
   };
@@ -101,7 +97,6 @@ export const TaskProvider = ({ children }) => {
         selectedTask,
         setSelectedTask,
         handleDeleteTaskList,
-        handleCreateTaskList,
         handleDeleteTask,
         handleCreatTask,
         handleToggleTask,

@@ -1,14 +1,12 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosAddCircle } from "react-icons/io";
 
 import List from "./List";
 import Logout from "./Logout";
 import CreateListModal from "../../modal/CreateListModal";
-import { TaskContext } from "../../../context/taskContext";
 
 const LeftSideBar = () => {
-  const { handleCreateTaskList } = useContext(TaskContext);
   const [isOpen, setIsOpen] = useState(true);
 
   // Modal
@@ -39,11 +37,7 @@ const LeftSideBar = () => {
           onClick={() => openModal()}
         />
       </div>
-      <CreateListModal
-        isOpen={showModal}
-        onClose={closeModal}
-        onConfirm={handleCreateTaskList}
-      />
+      <CreateListModal isOpen={showModal} onClose={closeModal} />
       <Logout isOpen={isOpen} />
     </div>
   );
