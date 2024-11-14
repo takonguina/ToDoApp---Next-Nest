@@ -1,4 +1,5 @@
 import {
+  BelongsTo,
   Column,
   Default,
   ForeignKey,
@@ -6,13 +7,12 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { TaskList } from './tasklist.model';
-import { BadRequestException } from '@nestjs/common';
 
 @Table
 export class Task extends Model<Task> {
   @Column({
+    allowNull: false,
     validate: {
-      allowNull: false,
       // Check if the string is not empty
       notEmpty: true,
     },
@@ -23,19 +23,9 @@ export class Task extends Model<Task> {
   longDescription: string;
 
   @Column({
+    allowNull: false,
     validate: {
-      allowNull: false,
       isDate: true,
-      // Custom validation
-      // Check if the due date is in the future
-      isPast(value: Date) {
-        const today = new Date();
-        const dueDate = new Date(value);
-
-        if (dueDate.getTime() < today.setHours(0, 0, 0, 0)) {
-          throw new BadRequestException("Due date can't be in the past");
-        }
-      },
     },
   })
   dueDate: Date;
@@ -47,4 +37,11 @@ export class Task extends Model<Task> {
   @ForeignKey(() => TaskList)
   @Column
   taskListId: number;
+
+  // Define the relationship between the Task and TaskList models
+  @BelongsTo(() => TaskList, {
+    // When a TaskList is deleted, delete all associated tasks
+    onDelete: 'CASCADE',
+  })
+  taskList: TaskList;
 }
