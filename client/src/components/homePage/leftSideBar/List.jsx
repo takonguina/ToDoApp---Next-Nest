@@ -19,7 +19,9 @@ const List = () => {
           className={`group flex justify-between items-center p-2 rounded-lg hover:bg-zinc-100 cursor-pointer ${
             selectedList === tasklist.id ? "bg-zinc-100" : ""
           }`}
-          onClick={() => setSelectedList(tasklist.id)}
+          onClick={() => {
+            setSelectedList(tasklist.id);
+          }}
         >
           <div className="flex justify-center items-center">
             <p className="text-lg font-semibold text-zinc-800 mr-2">

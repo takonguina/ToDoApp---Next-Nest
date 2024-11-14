@@ -30,11 +30,12 @@ export const createTask = async (
       const updatedTaskList = updatedTaskLists.find(
         (taskList) => taskList.id === tasklistId
       );
-      updatedTaskList.tasks.push(response.data);
+      updatedTaskList.tasks = updatedTaskList.tasks || [];
+      updatedTaskList.tasks.push(response?.data);
       setTaskLists(updatedTaskLists);
     }
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response?.data);
   }
 };
 

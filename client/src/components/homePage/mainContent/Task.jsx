@@ -4,7 +4,7 @@ import { TaskContext } from "../../../context/taskContext";
 
 const Task = ({ task }) => {
   const { id, shortDescription, longDescription, completed, dueDate } = task;
-  const { selectedTaskListObj, setSelectedTask, handleToggleTask } =
+  const { selectedTaskObj, setSelectedTask, handleToggleTask } =
     useContext(TaskContext);
   const formattedDate = new Date(dueDate).toLocaleDateString("fr-FR", {
     day: "numeric",
@@ -17,7 +17,7 @@ const Task = ({ task }) => {
       <div className="h-[1px] w-full bg-zinc-300"></div>
       <div
         className={`group flex my-1 p-2 cursor-pointer hover:bg-zinc-100 rounded-lg ${
-          selectedTaskListObj?.id === id ? "bg-zinc-100" : ""
+          selectedTaskObj?.id === id ? "bg-blue-100" : ""
         }`}
         onClick={() => setSelectedTask(id)}
       >
