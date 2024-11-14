@@ -1,13 +1,16 @@
-import axios from "axios";
+import api from "../service/api";
 
 // Create a tasklist
 export const createTaskList = async (
   taskListName,
   setTaskLists,
-  accessToken
+  accessToken,
+  setError,
+  onClose,
+  setListName
 ) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       "http://localhost:3000/tasklist",
       {
         name: taskListName,
@@ -20,10 +23,20 @@ export const createTaskList = async (
     );
     if (response.status === 201) {
       // Updating the taskLists state
-      setTaskLists((prevTaskLists) => [...prevTaskLists, response.data]);
+      setTaskLists((prevTaskLists) => [
+        ...prevTaskLists,
+        { ...response.data, tasks: response.data.tasks || [] },
+      ]);
+      setListName("");
+      onClose();
     }
   } catch (error) {
-    console.log(error.response.data);
+    if (error.response && error.response.status === 409) {
+      setError("Task list already exists");
+    } else {
+      setError("Something went wrong. Please try again later.");
+    }
+    console.log(error.response);
   }
 };
 
@@ -35,7 +48,7 @@ export const deleteTaskList = async (
   setTaskLists
 ) => {
   try {
-    const response = await axios.delete(
+    const response = await api.delete(
       `http://localhost:3000/tasklist/${taskListId}`,
       {
         headers: {

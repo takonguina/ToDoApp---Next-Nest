@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../service/api";
 
 // creat task
 export const createTask = async (
@@ -11,7 +11,7 @@ export const createTask = async (
   accessToken
 ) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       `http://localhost:3000/task/${tasklistId}`,
       {
         shortDescription,
@@ -48,7 +48,7 @@ export const toggleTask = async (
   accessToken
 ) => {
   try {
-    const response = await axios.patch(
+    const response = await api.patch(
       `http://localhost:3000/task/${taskId}`,
       {},
       {
@@ -83,14 +83,11 @@ export const deleteTask = async (
   accessToken
 ) => {
   try {
-    const response = await axios.delete(
-      `http://localhost:3000/task/${taskId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await api.delete(`http://localhost:3000/task/${taskId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     if (response.status === 200) {
       // Updating the taskLists state
       const updatedTaskLists = [...taskLists];

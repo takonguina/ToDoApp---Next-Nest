@@ -1,8 +1,24 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { createTaskList } from "../../utils/taskList";
+import { AuthContext } from "../../context/AuthContext";
+import { TaskContext } from "../../context/taskContext";
 
-const CreateListModal = ({ isOpen, onClose, onConfirm }) => {
+const CreateListModal = ({ isOpen, onClose }) => {
   const [error, setError] = useState("");
   const [listName, setListName] = useState("");
+  const { accessToken } = useContext(AuthContext);
+  const { setTaskLists } = useContext(TaskContext);
+
+  const handleCreateTaskList = async (taskListName) => {
+    await createTaskList(
+      taskListName,
+      setTaskLists,
+      accessToken,
+      setError,
+      onClose,
+      setListName
+    );
+  };
 
   return (
     isOpen && (
@@ -56,7 +72,7 @@ const CreateListModal = ({ isOpen, onClose, onConfirm }) => {
                       setError("Please enter a list name");
                       return;
                     }
-                    onConfirm(listName), setListName(""), onClose();
+                    handleCreateTaskList(listName);
                   }}
                 >
                   Create
