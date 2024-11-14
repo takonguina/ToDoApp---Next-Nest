@@ -30,11 +30,12 @@ export const createTask = async (
       const updatedTaskList = updatedTaskLists.find(
         (taskList) => taskList.id === tasklistId
       );
-      updatedTaskList.tasks.push(response.data);
+      updatedTaskList.tasks = updatedTaskList.tasks || [];
+      updatedTaskList.tasks.push(response?.data);
       setTaskLists(updatedTaskLists);
     }
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response?.data);
   }
 };
 
@@ -42,7 +43,7 @@ export const createTask = async (
 export const toggleTask = async (
   taskId,
   taskLists,
-  selectedList,
+  selectedList, // id of the selected task list
   setTaskLists,
   accessToken
 ) => {
@@ -59,14 +60,17 @@ export const toggleTask = async (
     if (response.status === 200) {
       // Updating the taskLists state
       const updatedTaskLists = [...taskLists];
-      const updatedTask = updatedTaskLists[selectedList].tasks.find(
+      const selectedListObject = updatedTaskLists.find(
+        (list) => list.id === selectedList
+      );
+      const updatedTask = selectedListObject.tasks.find(
         (task) => task.id === taskId
       );
       updatedTask.completed = !updatedTask.completed;
       setTaskLists(updatedTaskLists);
     }
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response?.data);
   }
 };
 
@@ -90,12 +94,15 @@ export const deleteTask = async (
     if (response.status === 200) {
       // Updating the taskLists state
       const updatedTaskLists = [...taskLists];
-      updatedTaskLists[selectedList].tasks = updatedTaskLists[
-        selectedList
-      ].tasks.filter((task) => task.id !== taskId);
+      const selectedListObject = updatedTaskLists.find(
+        (list) => list.id === selectedList
+      );
+      selectedListObject.tasks = selectedListObject.tasks.filter(
+        (task) => task.id !== taskId
+      );
       setTaskLists(updatedTaskLists);
     }
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response?.data);
   }
 };

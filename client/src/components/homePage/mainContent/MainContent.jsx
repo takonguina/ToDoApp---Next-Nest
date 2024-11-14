@@ -1,18 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Task from "./Task";
 import CreateTaskModal from "../../modal/CreatTaskModal";
+import { TaskContext } from "../../../context/taskContext";
 
-const MainContent = ({
-  list,
-  selectedTask,
-  setSelectedTask,
-  handleToggleTask,
-  handleCreatTask,
-}) => {
+const MainContent = () => {
+  const { selectedTaskListObj, handleCreatTask } = useContext(TaskContext);
   const [isCompletedVisible, setIsCompletedVisible] = useState(false);
 
-  const completedTasks = list?.tasks?.filter((task) => task.completed);
-  const incompleteTasks = list?.tasks?.filter((task) => !task.completed);
+  const completedTasks = selectedTaskListObj?.tasks?.filter(
+    (task) => task.completed
+  );
+  const incompleteTasks = selectedTaskListObj?.tasks?.filter(
+    (task) => !task.completed
+  );
 
   // Modal
   const [showModal, setShowModal] = useState(false);
@@ -21,19 +21,23 @@ const MainContent = ({
 
   return (
     <div className="flex-1 m-4 p-4 h-[calc(100%-2rem)]">
-      {list ? (
+      {selectedTaskListObj ? (
         <div>
           <div className="flex items-center">
-            <p className="text-2xl font-bold mr-8">{list.name}</p>
+            <p className="text-2xl font-bold mr-8">
+              {selectedTaskListObj.name}
+            </p>
             <p
               className={`text-2xl text-white py-1 px-2 rounded-lg ${
-                list?.tasks?.filter((task) => !task.completed).length > 0
+                selectedTaskListObj?.tasks?.filter((task) => !task.completed)
+                  .length > 0
                   ? "bg-amber-500"
                   : "bg-green-500"
               }`}
             >
-              {list?.tasks
-                ? list?.tasks?.filter((task) => !task.completed).length
+              {selectedTaskListObj?.tasks
+                ? selectedTaskListObj?.tasks?.filter((task) => !task.completed)
+                    .length
                 : 0}
             </p>
           </div>
@@ -47,13 +51,7 @@ const MainContent = ({
           </div>
           <div className="flex flex-col mt-8">
             {incompleteTasks?.map((task) => (
-              <Task
-                key={task.id}
-                task={task}
-                selectedTask={selectedTask}
-                setSelectedTask={setSelectedTask}
-                handleToggleTask={handleToggleTask}
-              />
+              <Task key={task.id} task={task} />
             ))}
           </div>
           <div>
@@ -70,13 +68,7 @@ const MainContent = ({
               <div className="mt-2">
                 <h2 className="text-lg font-bold">Completed Tasks</h2>
                 {completedTasks?.map((task) => (
-                  <Task
-                    key={task.id}
-                    task={task}
-                    selectedTask={selectedTask}
-                    setSelectedTask={setSelectedTask}
-                    handleToggleTask={handleToggleTask}
-                  />
+                  <Task key={task.id} task={task} />
                 ))}
               </div>
             )}
@@ -84,7 +76,7 @@ const MainContent = ({
           <CreateTaskModal
             isOpen={showModal}
             onClose={closeModal}
-            listId={list.id}
+            listId={selectedTaskListObj.id}
             onConfirm={handleCreatTask}
           />
         </div>
